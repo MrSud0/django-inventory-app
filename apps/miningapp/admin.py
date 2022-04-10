@@ -9,8 +9,8 @@ admin.site.register(Coin)
 class GPUAdmin(admin.ModelAdmin):
     list_display = ('name', 'model', 'price', 'wattage')
     list_filter = ("price",)
-    search_fields = ['name']
-    # prepopulated_fields = {'test': ('kappa',)}
+    search_fields = ['name','memory','wattage']
+    prepopulated_fields = {'slug': ('name',)}
 
 
 admin.site.register(GPU, GPUAdmin)

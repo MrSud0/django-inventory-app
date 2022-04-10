@@ -26,6 +26,8 @@ MODEL = (
 #TODO  Price will be updated dynamically
 # https://github.com/AbenOG/skroutz_price_compare
 class GPU(models.Model):
+    id = models.BigAutoField(db_column='id', primary_key=True, default=None)
+    slug = models.SlugField(max_length=200, unique=True)
     name = models.CharField(max_length=200, unique=False, null=True )
     brand = models.IntegerField(choices=BRAND,default=0)
     model = models.IntegerField(choices=MODEL, default=0)
@@ -33,7 +35,7 @@ class GPU(models.Model):
     memory_manifacturer = models.CharField(max_length=200, unique=False, null=True )
     wattage = models.CharField(max_length=200, unique=False)
     price = models.FloatField()
-    comments = models.CharField(max_length=200, unique=False, null=True )
+    comments = models.CharField(max_length=200, unique=False, null=True, )
 
     class Meta:
         ordering = ['price']
@@ -43,12 +45,16 @@ class GPU(models.Model):
 
 # TODO currency class-enum
 class Coin(models.Model):
+    id = models.BigAutoField(db_column='id', primary_key=True, default=None)
+    slug = models.SlugField(max_length=200, unique=True)
     name = models.CharField(max_length=200, unique=False)
     price = models.FloatField()
     currency = models.CharField(max_length=200, unique=False)
 
 # Value is hash / second
 class Hashrate(models.Model):
+    id = models.BigAutoField(db_column='id', primary_key=True, default=None)
+    slug = models.SlugField(max_length=200, unique=True)
     gpu = models.ForeignKey(GPU,on_delete=models.CASCADE)
     coin = models.ForeignKey(Coin, on_delete=models.CASCADE)
     value = models.FloatField()
@@ -56,6 +62,8 @@ class Hashrate(models.Model):
 
 # TODO brand class-enum
 class Motherboard(models.Model):
+    id = models.BigAutoField(db_column='id', primary_key=True, default=None)
+    slug = models.SlugField(max_length=200, unique=True)
     name = models.CharField(max_length=200, unique=False)
     brand = models.CharField(max_length=200, unique=False)
     pcie_slots = models.IntegerField()
