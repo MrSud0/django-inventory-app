@@ -1,5 +1,5 @@
 from django.contrib import admin
-
+from apps.miningapp.models import Hashrate,Motherboard,Coin, GPU
 # Register your models here.
 admin.site.register(Hashrate)
 admin.site.register(Motherboard)
