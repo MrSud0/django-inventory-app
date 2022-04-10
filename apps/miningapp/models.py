@@ -36,7 +36,7 @@ class Price(models.Model):
     id = models.BigAutoField(db_column='id', primary_key=True, default=None)
     value = models.FloatField()
     shop = models.CharField(max_length=200, unique=False, blank=True, default=None, null=True)
-    locale = models.ForeignKey(Locale, on_delete=models.CASCADE, blank=True, default=None)
+    locale = models.ForeignKey(Locale, on_delete=models.CASCADE, blank=True, default=None, null=True)
     updated_on = models.DateTimeField(auto_now=True)
 
     class Meta:
@@ -90,7 +90,7 @@ class RAM(models.Model):
     id = models.BigAutoField(db_column='id', primary_key=True, default=None)
     slug = models.SlugField(max_length=200, unique=False, blank=True, default=None)
     capacity = models.CharField(max_length=200, unique=False, blank=True, default=None)
-    used_in_rig = models.ForeignKey(MiningRig, on_delete=models.CASCADE, blank=True, default=None)
+    used_in_rig = models.ForeignKey(MiningRig, on_delete=models.CASCADE, blank=True, default=None, null=True)
 
     class Meta:
         managed = True
@@ -103,7 +103,7 @@ class PSU(models.Model):
     slug = models.SlugField(max_length=200, unique=False, blank=True, default=None)
     wattage = models.CharField(max_length=200, unique=False, blank=True, default=None)
     efficiency = models.CharField(max_length=200, unique=False, blank=True, default=None)
-    used_in_rig = models.ForeignKey(MiningRig, on_delete=models.CASCADE, blank=True, default=None)
+    used_in_rig = models.ForeignKey(MiningRig, on_delete=models.CASCADE, blank=True, default=None, null=True)
     noise = models.CharField(max_length=200, unique=False, blank=True, default=None)
 
     class Meta:
@@ -119,7 +119,7 @@ class CPU(models.Model):
     chip_manufacturer = models.CharField(max_length=200, unique=False, blank=True, default=None)
     chipset = models.CharField(max_length=200, unique=False, blank=True, default=None)
     core_clock = models.CharField(max_length=200, unique=False, blank=True, default=None)
-    used_in_rig = models.ForeignKey(MiningRig, on_delete=models.CASCADE, blank=True, default=None)
+    used_in_rig = models.ForeignKey(MiningRig, on_delete=models.CASCADE, blank=True, default=None, null=True)
 
     class Meta:
         managed = True
@@ -153,7 +153,7 @@ class Fan(models.Model):
     width = models.CharField(max_length=200, unique=False, blank=True, default=None)
     height = models.CharField(max_length=200, unique=False, blank=True, default=None)
     length = models.CharField(max_length=200, unique=False, blank=True, default=None)
-    used_in_rig = models.ForeignKey(MiningRig, on_delete=models.CASCADE, blank=True, default=None)
+    used_in_rig = models.ForeignKey(MiningRig, on_delete=models.CASCADE, blank=True, default=None, null=True)
 
     class Meta:
         managed = True
@@ -170,7 +170,7 @@ class RigCase(models.Model):
     height = models.CharField(max_length=200, unique=False, blank=True, default=None)
     length = models.CharField(max_length=200, unique=False, blank=True, default=None)
     open_air = models.BooleanField()
-    used_in_rig = models.ForeignKey(MiningRig, on_delete=models.CASCADE, blank=True, default=None)
+    used_in_rig = models.ForeignKey(MiningRig, on_delete=models.CASCADE, blank=True, default=None, null=True)
 
     class Meta:
         managed = True
@@ -190,13 +190,13 @@ class GPU(models.Model):
     memory = models.CharField(max_length=200, unique=False, blank=True, default=None, null=True)
     memory_manufacturer = models.CharField(max_length=200, unique=False, blank=True, default=None, null=True)
     pcie_slots = models.IntegerField()
-    wattage = models.ForeignKey(Wattage, on_delete=models.CASCADE, blank=True, default=None)
-    comments = models.CharField(max_length=200, unique=False, blank=True, default=None, null=True, )
-    overclock = models.ForeignKey(Overclock, on_delete=models.CASCADE, blank=True, default=None)
-    live_price = models.ForeignKey(Price, on_delete=models.CASCADE, blank=True, default=None)
+    wattage = models.ForeignKey(Wattage, on_delete=models.CASCADE, blank=True, default=None, null=True)
+    comments = models.CharField(max_length=200, unique=False, blank=True, default=None, null=True )
+    overclock = models.ForeignKey(Overclock, on_delete=models.CASCADE, blank=True, default=None,  null=True )
+    live_price = models.ForeignKey(Price, on_delete=models.CASCADE, blank=True, default=None,  null=True )
     price = models.FloatField()
     updated_on = models.DateTimeField(auto_now=True)
-    used_in_rig = models.ForeignKey(MiningRig, on_delete=models.CASCADE, blank=True, default=None)
+    used_in_rig = models.ForeignKey(MiningRig, on_delete=models.CASCADE, blank=True, default=None, null=True)
 
     class Meta:
         managed = True
@@ -212,7 +212,7 @@ class Coin(models.Model):
     name = models.CharField(max_length=200, unique=False, blank=True, default=None)
     price = models.FloatField()
     currency = models.CharField(max_length=200, unique=False, blank=True, default=None)
-    live_price = models.ForeignKey(Price, on_delete=models.CASCADE, blank=True, default=None)
+    live_price = models.ForeignKey(Price, on_delete=models.CASCADE, blank=True, default=None, null=True)
     updated_on = models.DateTimeField(auto_now=True)
 
     class Meta:
@@ -224,8 +224,8 @@ class Coin(models.Model):
 class Hashrate(models.Model):
     id = models.BigAutoField(db_column='id', primary_key=True, default=None)
     slug = models.SlugField(max_length=200, unique=False, blank=True, default=None)
-    gpu = models.ForeignKey(GPU, on_delete=models.CASCADE, blank=True, default=None)
-    coin = models.ForeignKey(Coin, on_delete=models.CASCADE, blank=True, default=None)
+    gpu = models.ForeignKey(GPU, on_delete=models.CASCADE, blank=True, default=None, null=True)
+    coin = models.ForeignKey(Coin, on_delete=models.CASCADE, blank=True, default=None, null=True)
     value = models.FloatField()
 
     class Meta:
@@ -261,3 +261,5 @@ class ProfitabilityForecast(models.Model):
     class Meta:
         managed = True
         db_table = 'profitabilityforecast'
+
+
