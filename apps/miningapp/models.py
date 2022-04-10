@@ -150,9 +150,6 @@ class GPU(models.Model):
     def __str__(self):
         return self.name
 
-
-
-
 class Coin(models.Model):
     id = models.BigAutoField(db_column='id', primary_key=True, default=None)
     slug = models.SlugField(max_length=200, unique=True)
@@ -172,18 +169,19 @@ class Hashrate(models.Model):
     value = models.FloatField()
 
 
-
-
 class OperationCenter(models.Model):
     id = models.BigAutoField(db_column='id', primary_key=True, default=None)
     slug = models.SlugField(max_length=200, unique=True)
+    name = models.CharField(max_length=200, unique=False)
 
 
 class ProfitabilityExperiment(models.Model):
     id = models.BigAutoField(db_column='id', primary_key=True, default=None)
     slug = models.SlugField(max_length=200, unique=True)
+    name = models.CharField(max_length=200, unique=False)
 
 
 class ProfitabilityForecast(models.Model):
     id = models.BigAutoField(db_column='id', primary_key=True, default=None)
     slug = models.SlugField(max_length=200, unique=True)
+    name = models.CharField(max_length=200, unique=False)
