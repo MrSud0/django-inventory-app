@@ -23,105 +23,159 @@ MODEL = (
 
 class Locale(models.Model):
     id = models.BigAutoField(db_column='id', primary_key=True, default=None)
-    name = models.CharField(max_length=200, unique=False, null=True)
-    description = models.CharField(max_length=200, unique=False, null=True)
-    short_name = models.CharField(max_length=200, unique=False, null=True)
+    name = models.CharField(max_length=200, unique=False, blank=True, default=None, null=True)
+    description = models.CharField(max_length=200, unique=False, blank=True, default=None, null=True)
+    short_name = models.CharField(max_length=200, unique=False, blank=True, default=None, null=True)
+
+    class Meta:
+        managed = True
+        db_table = 'locale'
 
 
 class Price(models.Model):
     id = models.BigAutoField(db_column='id', primary_key=True, default=None)
     value = models.FloatField()
-    shop = models.CharField(max_length=200, unique=False, null=True)
-    locale = models.ForeignKey(Locale, on_delete=models.CASCADE)
+    shop = models.CharField(max_length=200, unique=False, blank=True, default=None, null=True)
+    locale = models.ForeignKey(Locale, on_delete=models.CASCADE, blank=True, default=None)
     updated_on = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        managed = True
+        db_table = 'price'
+
 
 
 class Wattage(models.Model):
     id = models.BigAutoField(db_column='id', primary_key=True, default=None)
-    slug = models.SlugField(max_length=200, unique=True)
-    value = models.CharField(max_length=200, unique=False)
+    slug = models.SlugField(max_length=200, unique=False, blank=True, default=None)
+    value = models.CharField(max_length=200, unique=False, blank=True, default=None)
+
+    class Meta:
+        managed = True
+        db_table = 'wattage'
+
 
 
 class Overclock(models.Model):
     id = models.BigAutoField(db_column='id', primary_key=True, default=None)
-    slug = models.SlugField(max_length=200, unique=True)
-    memory_oveclock = models.CharField(max_length=200, unique=False)
-    core_overclock = models.CharField(max_length=200, unique=False)
-    core_voltage = models.CharField(max_length=200, unique=False)
-    memory_controller_voltage = models.CharField(max_length=200, unique=False)
-    memory_voltage = models.CharField(max_length=200, unique=False)
-    power_limit = models.CharField(max_length=200, unique=False)
-    soc_frequency = models.CharField(max_length=200, unique=False)
-    soc_vddmax = models.CharField(max_length=200, unique=False)
+    slug = models.SlugField(max_length=200, unique=False, blank=True, default=None)
+    memory_oveclock = models.CharField(max_length=200, unique=False, blank=True, default=None)
+    core_overclock = models.CharField(max_length=200, unique=False, blank=True, default=None)
+    core_voltage = models.CharField(max_length=200, unique=False, blank=True, default=None)
+    memory_controller_voltage = models.CharField(max_length=200, unique=False, blank=True, default=None)
+    memory_voltage = models.CharField(max_length=200, unique=False, blank=True, default=None)
+    power_limit = models.CharField(max_length=200, unique=False, blank=True, default=None)
+    soc_frequency = models.CharField(max_length=200, unique=False, blank=True, default=None)
+    soc_vddmax = models.CharField(max_length=200, unique=False, blank=True, default=None)
+
+    class Meta:
+        managed = True
+        db_table = 'overclock'
+
 
 
 class MiningRig(models.Model):
     id = models.BigAutoField(db_column='id', primary_key=True, default=None)
-    slug = models.SlugField(max_length=200, unique=True)
-    name = models.CharField(max_length=200, unique=False)
-    description = models.CharField(max_length=200, unique=False)
+    slug = models.SlugField(max_length=200, unique=False, blank=True, default=None)
+    name = models.CharField(max_length=200, unique=False, blank=True, default=None)
+    description = models.CharField(max_length=200, unique=False, blank=True, default=None)
+
+    class Meta:
+        managed = True
+        db_table = 'miningrig'
+
 
 
 class RAM(models.Model):
     id = models.BigAutoField(db_column='id', primary_key=True, default=None)
-    slug = models.SlugField(max_length=200, unique=True)
-    capacity = models.CharField(max_length=200, unique=False)
-    used_in_rig = models.ForeignKey(MiningRig, on_delete=models.CASCADE)
+    slug = models.SlugField(max_length=200, unique=False, blank=True, default=None)
+    capacity = models.CharField(max_length=200, unique=False, blank=True, default=None)
+    used_in_rig = models.ForeignKey(MiningRig, on_delete=models.CASCADE, blank=True, default=None)
+
+    class Meta:
+        managed = True
+        db_table = 'ram'
+
 
 
 class PSU(models.Model):
     id = models.BigAutoField(db_column='id', primary_key=True, default=None)
-    slug = models.SlugField(max_length=200, unique=True)
-    wattage = models.CharField(max_length=200, unique=False)
-    efficiency = models.CharField(max_length=200, unique=False)
-    used_in_rig = models.ForeignKey(MiningRig, on_delete=models.CASCADE)
-    noise = models.CharField(max_length=200, unique=False)
+    slug = models.SlugField(max_length=200, unique=False, blank=True, default=None)
+    wattage = models.CharField(max_length=200, unique=False, blank=True, default=None)
+    efficiency = models.CharField(max_length=200, unique=False, blank=True, default=None)
+    used_in_rig = models.ForeignKey(MiningRig, on_delete=models.CASCADE, blank=True, default=None)
+    noise = models.CharField(max_length=200, unique=False, blank=True, default=None)
+
+    class Meta:
+        managed = True
+        db_table = 'psu'
+
 
 
 # TODO Chip manufacturer to be enumeration
 class CPU(models.Model):
     id = models.BigAutoField(db_column='id', primary_key=True, default=None)
-    slug = models.SlugField(max_length=200, unique=True)
-    chip_manufacturer = models.CharField(max_length=200, unique=False)
-    chipset = models.CharField(max_length=200, unique=False)
-    core_clock = models.CharField(max_length=200, unique=False)
-    used_in_rig = models.ForeignKey(MiningRig, on_delete=models.CASCADE)
+    slug = models.SlugField(max_length=200, unique=False, blank=True, default=None)
+    chip_manufacturer = models.CharField(max_length=200, unique=False, blank=True, default=None)
+    chipset = models.CharField(max_length=200, unique=False, blank=True, default=None)
+    core_clock = models.CharField(max_length=200, unique=False, blank=True, default=None)
+    used_in_rig = models.ForeignKey(MiningRig, on_delete=models.CASCADE, blank=True, default=None)
+
+    class Meta:
+        managed = True
+        db_table = 'cpu'
+
 
 
 class Motherboard(models.Model):
     id = models.BigAutoField(db_column='id', primary_key=True, default=None)
-    slug = models.SlugField(max_length=200, unique=True)
-    name = models.CharField(max_length=200, unique=False)
-    brand = models.CharField(max_length=200, unique=False)
+    slug = models.SlugField(max_length=200, unique=False, blank=True, default=None)
+    name = models.CharField(max_length=200, unique=False, blank=True, default=None)
+    brand = models.CharField(max_length=200, unique=False, blank=True, default=None)
     pcie_slots = models.IntegerField()
-    cpu_chip = models.CharField(max_length=200, unique=False)
+    cpu_chip = models.CharField(max_length=200, unique=False, blank=True, default=None)
+
+    class Meta:
+        managed = True
+        db_table = 'motherboard'
+
 
 
 class Fan(models.Model):
     id = models.BigAutoField(db_column='id', primary_key=True, default=None)
-    slug = models.SlugField(max_length=200, unique=True)
-    name = models.CharField(max_length=200, unique=False)
-    brand = models.CharField(max_length=200, unique=False)
-    model = models.CharField(max_length=200, unique=False)
-    rpm = models.CharField(max_length=200, unique=False)
-    wattage = models.CharField(max_length=200, unique=False)
-    noise = models.CharField(max_length=200, unique=False)
-    width = models.CharField(max_length=200, unique=False)
-    height = models.CharField(max_length=200, unique=False)
-    length = models.CharField(max_length=200, unique=False)
-    used_in_rig = models.ForeignKey(MiningRig, on_delete=models.CASCADE)
+    slug = models.SlugField(max_length=200, unique=False, blank=True, default=None)
+    name = models.CharField(max_length=200, unique=False, blank=True, default=None)
+    brand = models.CharField(max_length=200, unique=False, blank=True, default=None)
+    model = models.CharField(max_length=200, unique=False, blank=True, default=None)
+    rpm = models.CharField(max_length=200, unique=False, blank=True, default=None)
+    wattage = models.CharField(max_length=200, unique=False, blank=True, default=None)
+    noise = models.CharField(max_length=200, unique=False, blank=True, default=None)
+    width = models.CharField(max_length=200, unique=False, blank=True, default=None)
+    height = models.CharField(max_length=200, unique=False, blank=True, default=None)
+    length = models.CharField(max_length=200, unique=False, blank=True, default=None)
+    used_in_rig = models.ForeignKey(MiningRig, on_delete=models.CASCADE, blank=True, default=None)
+
+    class Meta:
+        managed = True
+        db_table = 'fan'
+
 
 
 class RigCase(models.Model):
     id = models.BigAutoField(db_column='id', primary_key=True, default=None)
-    slug = models.SlugField(max_length=200, unique=True)
-    brand = models.CharField(max_length=200, unique=False)
-    model = models.CharField(max_length=200, unique=False)
-    width = models.CharField(max_length=200, unique=False)
-    height = models.CharField(max_length=200, unique=False)
-    length = models.CharField(max_length=200, unique=False)
+    slug = models.SlugField(max_length=200, unique=False, blank=True, default=None)
+    brand = models.CharField(max_length=200, unique=False, blank=True, default=None)
+    model = models.CharField(max_length=200, unique=False, blank=True, default=None)
+    width = models.CharField(max_length=200, unique=False, blank=True, default=None)
+    height = models.CharField(max_length=200, unique=False, blank=True, default=None)
+    length = models.CharField(max_length=200, unique=False, blank=True, default=None)
     open_air = models.BooleanField()
-    used_in_rig = models.ForeignKey(MiningRig, on_delete=models.CASCADE)
+    used_in_rig = models.ForeignKey(MiningRig, on_delete=models.CASCADE, blank=True, default=None)
+
+    class Meta:
+        managed = True
+        db_table = 'rigcase'
+
 
 
 # TODO  Price will be updated dynamically
@@ -129,59 +183,81 @@ class RigCase(models.Model):
 # https://github.com/AbenOG/skroutz_price_compare
 class GPU(models.Model):
     id = models.BigAutoField(db_column='id', primary_key=True, default=None)
-    slug = models.SlugField(max_length=200, unique=True)
-    name = models.CharField(max_length=200, unique=False, null=True)
+    slug = models.SlugField(max_length=200, unique=False, blank=True, default=None)
+    name = models.CharField(max_length=200, unique=False, blank=True, default=None, null=True)
     brand = models.IntegerField(choices=BRAND, default=0)
     model = models.IntegerField(choices=MODEL, default=0)
-    memory = models.CharField(max_length=200, unique=False, null=True)
-    memory_manufacturer = models.CharField(max_length=200, unique=False, null=True)
+    memory = models.CharField(max_length=200, unique=False, blank=True, default=None, null=True)
+    memory_manufacturer = models.CharField(max_length=200, unique=False, blank=True, default=None, null=True)
     pcie_slots = models.IntegerField()
-    wattage = models.ForeignKey(Wattage, on_delete=models.CASCADE)
-    comments = models.CharField(max_length=200, unique=False, null=True, )
-    overclock = models.ForeignKey(Overclock, on_delete=models.CASCADE)
-    live_price = models.ForeignKey(Price, on_delete=models.CASCADE)
+    wattage = models.ForeignKey(Wattage, on_delete=models.CASCADE, blank=True, default=None)
+    comments = models.CharField(max_length=200, unique=False, blank=True, default=None, null=True, )
+    overclock = models.ForeignKey(Overclock, on_delete=models.CASCADE, blank=True, default=None)
+    live_price = models.ForeignKey(Price, on_delete=models.CASCADE, blank=True, default=None)
     price = models.FloatField()
     updated_on = models.DateTimeField(auto_now=True)
-    used_in_rig = models.ForeignKey(MiningRig, on_delete=models.CASCADE)
+    used_in_rig = models.ForeignKey(MiningRig, on_delete=models.CASCADE, blank=True, default=None)
 
     class Meta:
-        ordering = ['price']
+        managed = True
+        db_table = 'gpu'
 
     def __str__(self):
         return self.name
 
+
 class Coin(models.Model):
     id = models.BigAutoField(db_column='id', primary_key=True, default=None)
-    slug = models.SlugField(max_length=200, unique=True)
-    name = models.CharField(max_length=200, unique=False)
+    slug = models.SlugField(max_length=200, unique=False, blank=True, default=None)
+    name = models.CharField(max_length=200, unique=False, blank=True, default=None)
     price = models.FloatField()
-    currency = models.CharField(max_length=200, unique=False)
-    live_price = models.ForeignKey(Price, on_delete=models.CASCADE)
+    currency = models.CharField(max_length=200, unique=False, blank=True, default=None)
+    live_price = models.ForeignKey(Price, on_delete=models.CASCADE, blank=True, default=None)
     updated_on = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        managed = True
+        db_table = 'coin'
 
 
 # Value is hash / second
 class Hashrate(models.Model):
     id = models.BigAutoField(db_column='id', primary_key=True, default=None)
-    slug = models.SlugField(max_length=200, unique=True)
-    gpu = models.ForeignKey(GPU, on_delete=models.CASCADE)
-    coin = models.ForeignKey(Coin, on_delete=models.CASCADE)
+    slug = models.SlugField(max_length=200, unique=False, blank=True, default=None)
+    gpu = models.ForeignKey(GPU, on_delete=models.CASCADE, blank=True, default=None)
+    coin = models.ForeignKey(Coin, on_delete=models.CASCADE, blank=True, default=None)
     value = models.FloatField()
+
+    class Meta:
+        managed = True
+        db_table = 'hashrate'
 
 
 class OperationCenter(models.Model):
     id = models.BigAutoField(db_column='id', primary_key=True, default=None)
-    slug = models.SlugField(max_length=200, unique=True)
-    name = models.CharField(max_length=200, unique=False)
+    slug = models.SlugField(max_length=200, unique=False, blank=True, default=None)
+    name = models.CharField(max_length=200, unique=False, blank=True, default=None)
+
+    class Meta:
+        managed = True
+        db_table = 'operationcenter'
 
 
 class ProfitabilityExperiment(models.Model):
     id = models.BigAutoField(db_column='id', primary_key=True, default=None)
-    slug = models.SlugField(max_length=200, unique=True)
-    name = models.CharField(max_length=200, unique=False)
+    slug = models.SlugField(max_length=200, unique=False, blank=True, default=None)
+    name = models.CharField(max_length=200, unique=False, blank=True, default=None)
+
+    class Meta:
+        managed = True
+        db_table = 'profitabilityexperiment'
 
 
 class ProfitabilityForecast(models.Model):
     id = models.BigAutoField(db_column='id', primary_key=True, default=None)
-    slug = models.SlugField(max_length=200, unique=True)
-    name = models.CharField(max_length=200, unique=False)
+    slug = models.SlugField(max_length=200, unique=False, blank=True, default=None)
+    name = models.CharField(max_length=200, unique=False, blank=True, default=None)
+
+    class Meta:
+        managed = True
+        db_table = 'profitabilityforecast'
