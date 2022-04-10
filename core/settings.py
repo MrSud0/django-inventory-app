@@ -126,9 +126,15 @@ STATIC_ROOT = 'core/staticfiles'
 STATIC_URL = '/static/'
 
 # # Extra places for collectstatic to find static files.
-# STATICFILES_DIRS = (
-#     os.path.join(BASE_DIR, 'static'),
-# )
+STATICFILES_DIRS = (
+ #   os.path.join(BASE_DIR, 'static'),
+    'apps/static',
+)
+
+# configuring the location for media
+MEDIA_URL = '/media/'
+MEDIA_ROOT = 'media'
+
 
 # Configure Django App for Heroku.
 #############################################################
